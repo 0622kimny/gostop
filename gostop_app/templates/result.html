@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산 결과</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="max-width: 600px;">
+    <div class="card round-result-box">
+        <h1>계산 결과</h1>
+        {% if round_result %}
+            {% if round_result.is_nagari %}
+                <p class="nagari" style="font-size: 1.5em;">이번 판은 나가리입니다!</p>
+            {% else %}
+                <p style="font-size: 1.2em;">승자: <span class="winner">{{ round_result.winner_name }}</span></p>
+                <hr>
+                <h4>점수 상세</h4>
+                <p class="breakdown">
+                    {% for key, value in round_result.breakdown.items %}
+                        <span style="margin: 0 5px; display: inline-block;">[{{ key }}: {{ value }}]</span>
+                    {% endfor %}
+                </p>
+                <hr>
+                <h4>금액 정산</h4>
+                <ul class="result-list">
+                {% for name, delta in round_result.player_deltas.items %}
+                    <li>
+                        <span>{{ name }}</span>
+                        {% if delta > 0 %}
+                            <span style="color: blue; font-weight: bold;">+{{ delta }}원</span>
+                        {% elif delta < 0 %}
+                            <span style="color: red; font-weight: bold;">{{ delta }}원</span>
+                        {% else %}
+                            <span>{{ delta }}원</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% else %}
+            <p style="color: red;">계산 중 오류가 발생했습니다. 다시 시도해주세요.</p>
+        {% endif %}
+        
+        <div class="button-group" style="margin-top: 20px;">
+            <a href="{% url 'setup' %}" class="button-link">
+                <button type="button">새 계산 시작하기</button>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,198 @@
+:root {
+    --main-green: #2E7D32;
+    --light-green: #4CAF50;
+    --dark-green: #1B5E20;
+    --background-color: #F1F8E9;
+    --card-background: #FFFFFF;
+    --text-color: #333333;
+    --border-color: #C8E6C9;
+    --accent-color: #FFC107;
+    --nagari-color: #E53935;
+}
+
+body {
+    margin: 0;
+    padding: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--dark-green);
+    margin-top: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 30px 0;
+}
+
+/* 결과 섹션 */
+.result-list {
+    list-style: none;
+    padding: 0;
+}
+
+.result-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.result-list li:nth-child(odd) {
+    background-color: #E8F5E9;
+}
+
+.result-list .score {
+    font-weight: 700;
+    color: var(--main-green);
+}
+
+.round-result-box {
+    background-color: #F9FBE7;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.round-result-box .winner {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.round-result-box .nagari {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: var(--nagari-color);
+}
+
+.breakdown {
+    font-size: 0.9em;
+    color: #555;
+    word-break: keep-all;
+}
+
+/* 입력 폼 */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: 500;
+    color: var(--main-green);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.input-group label {
+    flex-shrink: 0;
+}
+
+.input-group input[type="number"] {
+    width: 60px;
+}
+
+/* 카드 선택 */
+.card-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    padding: 10px;
+    background-color: #E8F5E9;
+    border-radius: 10px;
+}
+
+.card-selector img {
+    height: 70px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.card-selector input:checked+img {
+    border-color: var(--light-green);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(46, 125, 50, 0.5);
+}
+
+/* 버튼 */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.button-group button {
+    width: 150px;
+    padding: 12px;
+    background-color: var(--light-green);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.button-group button:hover {
+    background-color: var(--main-green);
+}
+
+.button-group a.button-link {
+    text-decoration: none;
+}
+
+.button-group .btn-secondary {
+    background-color: #757575;
+}
+
+.button-group .btn-secondary:hover {
+    background-color: #424242;
+}

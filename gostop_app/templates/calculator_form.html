@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점수 입력</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            {% if player_names %}
+                <form action="{% url 'calculate' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="player_names" value="{{ player_names|join:',' }}">
+                    <input type="hidden" name="bet_per_point" value="{{ bet_per_point }}">
+                    <input type="hidden" name="previous_nagari_count" value="{{ previous_nagari_count }}">
+                    
+                    {% for name in player_names %}
+                    <div class="player-section" id="player-section-{{ forloop.counter0 }}" style="display: none;">
+                        <h2>{{ name }}님의 정보 입력</h2>
+                        <div class="form-group input-group">
+                            <label>고:</label> <input type="number" name="go_{{ name }}" value="0" min="0">
+                            <label>흔들기/폭탄:</label> <input type="number" name="heundeulgi_{{ name }}" value="0" min="0" placeholder="횟수">
+                            <label><input type="checkbox" name="is_gobak_target_{{ name }}"> '고'하다가 졌나요? (고박)</label>
+                        </div>
+                        <div class="form-group input-group">
+                            <label>보너스:</label>
+                            <label><input type="radio" name="bonus_{{ name }}" value="none" checked> 없음</label>
+                            <label><input type="radio" name="bonus_{{ name }}" value="first_ppeok"> 첫 뻑 (+1점)</label>
+                            <label><input type="radio" name="bonus_{{ name }}" value="first_ddadak"> 첫 따닥 (+1점)</label>
+                            <label><input type="radio" name="bonus_{{ name }}" value="second_ppeok"> 2뻑 (+2점)</label>
+                            <label><input type="radio" name="bonus_{{ name }}" value="third_ppeok"> 3뻑 (+4점)</label>
+                        </div>
+    
+                        <h4 style="margin-top: 20px; margin-bottom: 10px;">획득한 패</h4>
+                        <div class="card-selector">
+                            {% for value, card_info in all_cards.items %}
+                            <label>
+                                <input type="checkbox" name="cards_{{ name }}" value="{{ value }}" style="display:none;">
+                                {% with 'images/cards/'|add:value|add:'.png' as image_path %}
+                                    <img src="{% static image_path %}" title="{{ card_info.name }}">
+                                {% endwith %}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="button-group" style="margin-top: 30px;">
+                        <button type="button" id="prevBtn" class="btn-secondary" onclick="navigate(-1)">이전</button>
+                        <button type="button" id="nextBtn" onclick="navigate(1)">다음</button>
+                        <button type="submit" id="submitBtn" style="display: none;">결과 계산</button>
+                    </div>
+                </form>
+            {% else %}
+                {% endif %}
+        </div>
+    </div>
+
+<script>
+    const playerSections = document.querySelectorAll('.player-section');
+    if (playerSections.length > 0) {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        let currentPage = 0;
+
+        function showPage(pageIndex) {
+            playerSections.forEach((section, index) => {
+                section.style.display = index === pageIndex ? 'block' : 'none';
+            });
+            prevBtn.style.display = pageIndex === 0 ? 'none' : 'inline-block';
+            nextBtn.style.display = pageIndex === playerSections.length - 1 ? 'none' : 'inline-block';
+            submitBtn.style.display = pageIndex === playerSections.length - 1 ? 'inline-block' : 'none';
+        }
+
+        function navigate(step) {
+            const newPage = currentPage + step;
+            if (newPage >= 0 && newPage < playerSections.length) {
+                currentPage = newPage;
+                showPage(currentPage);
+            }
+        }
+        showPage(0);
+    }
+</script>
+</body>
+</html>

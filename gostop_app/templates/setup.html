@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고스톱 점수 계산기 - 설정</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+        <div class="card">
+            <h1>고스톱 점수 계산기</h1>
+            <form action="{% url 'setup' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="players">플레이어 수</label>
+                    <select id="players" onchange="createPlayerInputs(this.value)">
+                        <option value="2">2명 (맞고)</option>
+                        <option value="3">3명</option>
+                    </select>
+                </div>
+                <div id="player_names_container"></div>
+                <div class="form-group">
+                    <label for="prev_nagari">이전까지 연속 나가리 횟수</label>
+                    <input type="number" id="prev_nagari" name="previous_nagari_count" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="bet">점당 금액 (원)</label>
+                    <input type="number" id="bet" name="bet_per_point" value="100">
+                </div>
+                <div class="button-group">
+                    <button type="submit">계산 시작하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function createPlayerInputs(numPlayers) {
+            const container = document.getElementById('player_names_container');
+            container.innerHTML = '';
+            for (let i = 1; i <= numPlayers; i++) {
+                const playerInputHTML = `
+                    <div class="form-group">
+                        <label>플레이어 ${i} 이름</label>
+                        <input type="text" name="player_names" required placeholder="이름을 입력하세요">
+                    </div>
+                `;
+                container.innerHTML += playerInputHTML;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            createPlayerInputs(2);
+        });
+    </script>
+</body>
+</html>
