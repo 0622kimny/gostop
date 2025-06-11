@@ -34,9 +34,22 @@ body {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
     color: var(--dark-green);
     margin-top: 0;
+}
+
+.player-section h2 {
+    margin-bottom: 20px;
+}
+
+.player-section h5 {
+    font-size: 1em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 h1 {
@@ -50,7 +63,6 @@ hr {
     margin: 30px 0;
 }
 
-/* 결과 섹션 */
 .result-list {
     list-style: none;
     padding: 0;
@@ -99,9 +111,12 @@ hr {
     word-break: keep-all;
 }
 
-/* 입력 폼 */
 .form-group {
     margin-bottom: 15px;
+}
+
+.form-group.nagari-group {
+    margin-bottom: 25px;
 }
 
 label {
@@ -135,32 +150,36 @@ select {
     width: 60px;
 }
 
-/* 카드 선택 */
-.card-selector {
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.card-grid label {
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    justify-content: center;
-    padding: 10px;
-    background-color: #E8F5E9;
-    border-radius: 10px;
-}
-
-.card-selector img {
-    height: 70px;
+    align-items: center;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 8px 12px;
     cursor: pointer;
-    border: 3px solid transparent;
-    border-radius: 5px;
-    transition: all 0.2s;
+    transition: background-color 0.2s;
 }
 
-.card-selector input:checked+img {
-    border-color: var(--light-green);
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(46, 125, 50, 0.5);
+.card-grid label:hover {
+    background-color: #f0f0f0;
 }
 
-/* 버튼 */
+.card-grid input {
+    margin-right: 8px;
+}
+
+.card-grid input:checked+span {
+    font-weight: bold;
+    color: var(--main-green);
+}
+
 .button-group {
     display: flex;
     gap: 10px;
